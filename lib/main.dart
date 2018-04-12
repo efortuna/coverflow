@@ -88,8 +88,8 @@ class _CoverFlowState extends State<CoverFlow> {
             direction: DismissDirection.vertical,
             child: new Center(
               child: new SizedBox(
-                height: Curves.easeOut.transform(value) * 300,
-                width: Curves.easeOut.transform(value) * 400,
+                height: Curves.easeOut.transform(value) * 525,
+                width: Curves.easeOut.transform(value) * 700,
                 child: new Stack(children: [
                   child,
                   new Container(color: Colors.transparent), ]),
