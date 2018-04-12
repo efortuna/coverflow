@@ -46,6 +46,7 @@ class CoverFlow extends StatefulWidget {
 class _CoverFlowState extends State<CoverFlow> {
   PageController controller;
   int currentpage = 0;
+  bool _pageHasChanged = false;
 
 
   @override
@@ -65,6 +66,7 @@ class _CoverFlowState extends State<CoverFlow> {
     return new PageView.builder(
         onPageChanged: (value) {
           setState(() {
+            _pageHasChanged = true;
             currentpage = value;
           });
         },
@@ -76,9 +78,7 @@ class _CoverFlowState extends State<CoverFlow> {
     return new AnimatedBuilder(
       animation: controller,
       builder: (context, Widget child) {
-        double result = 0.0;
-        //if (controller.hasClients) {
-          result = controller.page;
+        double result = _pageHasChanged? controller.page : 0.0;
           double value = result - index;
 
           value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
@@ -103,8 +103,6 @@ class _CoverFlowState extends State<CoverFlow> {
               });
             },
           );
-        //}
-        return new Container();
 
       },
       child: widget.displayCovers[index % widget.displayCovers.length],
