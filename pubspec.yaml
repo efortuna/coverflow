@@ -1,6 +1,6 @@
 name: simple_coverflow
 description: An extremely simplistic "cover flow" style animation to swipe between widgets.
-version: 0.0.2
+version: 0.0.1
 author: Emily Fortuna <efortuna@google.com>
 homepage: https://github.com/efortuna/coverflow
 
