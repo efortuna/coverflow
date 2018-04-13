@@ -1,68 +1,38 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Coverflow Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  static List<Container> data = [
-    new Container(color: Colors.orange),
-    new Container(color: Colors.blue),
-    new Container(color: Colors.amber),
-    new Container(color: Colors.deepPurple),
-    new Container(color: Colors.green),
-    new Container(color: Colors.red),
-    new Container(color: Colors.yellow),
-    new Container(color: Colors.greenAccent),
-    new Container(color: Colors.black)
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: new Text('Coverflow Demo'),
-      ),
-      body: new CoverFlow(widgetBuilder,
-          disposeDismissed), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  Widget widgetBuilder(BuildContext context, int index) {
-    if (data.length == 0) {
-      return new Container();
-    } else {
-      return data[index % data.length];
-    }
-  }
-
-  disposeDismissed(int index, DismissDirection direction) {
-    data.removeAt(index);
-  }
-}
-
+/// Function that is called when a widget has been dismissed
 typedef void OnDismissedCallback(
     int itemDismissedIndex, DismissDirection direction);
 
+/// Widget that animates scanning through a list of other widgets, like
+/// the iOS Cover Flow animation.
 class CoverFlow extends StatefulWidget {
-  IndexedWidgetBuilder itemBuilder;
-  OnDismissedCallback dismissedCallback;
 
-  CoverFlow(this.itemBuilder, this.dismissedCallback);
+  /// Called to build a widget that will be animated to loop through.
+  final IndexedWidgetBuilder itemBuilder;
+
+  /// Called when an item has been dismissed.
+  final OnDismissedCallback dismissedCallback;
+
+  /// The fraction of the
+  /// [viewport](https://docs.flutter.io/flutter/widgets/Viewport-class.html)
+  /// that the animated items should cover.
+  final double viewportFraction;
+
+  /// The height in pixels of the largest possible size an animated item will be.
+  final int height;
+
+  /// The width in pixels of the largest possible size an animated item will be.
+  final int width;
+
+  /// If true, widgets in the list can be
+  /// [dismissed](https://docs.flutter.io/flutter/widgets/Dismissible-class.html).
+  /// If this is true, dismissedCallback must be specified to clean up any
+  /// state that your itemBuilder, otherwise, you will likely get errors thrown about.
+  final bool dismissibleItems;
+
+  CoverFlow(this.itemBuilder, {this.dismissibleItems: true, this.dismissedCallback,
+    this.viewportFraction: .65, this.height: 525, this.width: 700});
 
   @override
   _CoverFlowState createState() => new _CoverFlowState();
@@ -76,7 +46,7 @@ class _CoverFlowState extends State<CoverFlow> {
   @override
   initState() {
     super.initState();
-    controller = new PageController(viewportFraction: .65);
+    controller = new PageController(viewportFraction: widget.viewportFraction);
   }
 
   @override
@@ -98,7 +68,7 @@ class _CoverFlowState extends State<CoverFlow> {
         itemBuilder: (context, index) => builder(index));
   }
 
-  builder(int index) {
+  Widget builder(int index) {
     return new AnimatedBuilder(
         animation: controller,
         builder: (context, Widget child) {
@@ -107,16 +77,19 @@ class _CoverFlowState extends State<CoverFlow> {
 
           value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
 
+          var actualWidget = new Center(
+            child: new SizedBox(
+              height: Curves.easeOut.transform(value) * widget.height,
+              width: Curves.easeOut.transform(value) * widget.width,
+              child: child,
+            ),
+          );
+          if (!widget.dismissibleItems) return actualWidget;
+
           return new Dismissible(
             key: ObjectKey(child),
             direction: DismissDirection.vertical,
-            child: new Center(
-              child: new SizedBox(
-                height: Curves.easeOut.transform(value) * 525,
-                width: Curves.easeOut.transform(value) * 700,
-                child: child,
-              ),
-            ),
+            child: actualWidget,
             onDismissed: (direction) {
               setState(() {
                 widget.dismissedCallback(currentPage, direction);
