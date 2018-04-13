@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 /// Function that is called when a widget has been dismissed
 typedef void OnDismissedCallback(
