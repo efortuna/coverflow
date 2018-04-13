@@ -1,2 +1,4 @@
-# coverflow
-a knockoff bad coverflow implementation in Flutter
+# simple coverflow
+a knockoff bad cover flow implementation in Flutter
+
+Pull requests certainly welcome.
