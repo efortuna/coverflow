@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     }
   }
 
-  disposeDismissed(int index, DismissDirection direction) {
-    data.removeAt(index);
+  disposeDismissed(Widget item, DismissDirection direction) {
+    data.remove(item);
   }
 }

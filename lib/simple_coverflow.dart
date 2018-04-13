@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 /// Function that is called when a widget has been dismissed
 typedef void OnDismissedCallback(
-    int itemDismissedIndex, DismissDirection direction);
+    Widget dismissedItem, DismissDirection direction);
 
 /// Widget that animates scanning through a list of other widgets, like
 /// the iOS Cover Flow animation.
@@ -92,7 +92,7 @@ class _CoverFlowState extends State<CoverFlow> {
             child: actualWidget,
             onDismissed: (direction) {
               setState(() {
-                widget.dismissedCallback(currentPage, direction);
+                widget.dismissedCallback(child, direction);
                 controller.animateToPage(currentPage,
                     duration: new Duration(seconds: 2), curve: Curves.easeOut);
               });
