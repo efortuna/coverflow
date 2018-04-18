@@ -1,3 +1,8 @@
+## [0.0.5] - 4/18/18
+
+* Added [itemCount] field so that users can have a non-infinitely scrolling
+  cover flow. Also adjusted the default viewport value.
+
 ## [0.0.4] - 4/17/18
 
 * Bumped versioning constraints to support much later versions of Flutter.
