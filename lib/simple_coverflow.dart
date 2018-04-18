@@ -31,8 +31,15 @@ class CoverFlow extends StatefulWidget {
   /// state that your itemBuilder, otherwise, you will likely get errors thrown about.
   final bool dismissibleItems;
 
+  /// The number of items in this coverflow list. If specified, the CoverFlow
+  /// view is a finite list that scrolls only to the last list. If this value is
+  /// *not* specified, then CoverFlow is an infinite list that rebuilds the
+  /// cards one the user scrolls past the last one.
+  final int itemCount;
+
   CoverFlow(this.itemBuilder, {this.dismissibleItems: true, this.dismissedCallback,
-    this.viewportFraction: .65, this.height: 525, this.width: 700});
+    this.viewportFraction: .85, this.height: 525, this.width: 700,
+    this.itemCount: null});
 
   @override
   _CoverFlowState createState() => new _CoverFlowState();
@@ -65,6 +72,7 @@ class _CoverFlowState extends State<CoverFlow> {
           });
         },
         controller: controller,
+        itemCount: widget.itemCount,
         itemBuilder: (context, index) => builder(index));
   }
 
