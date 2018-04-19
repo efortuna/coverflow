@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 /// Function that is called when a widget has been dismissed
@@ -37,9 +38,9 @@ class CoverFlow extends StatefulWidget {
   /// cards one the user scrolls past the last one.
   final int itemCount;
 
-  CoverFlow(this.itemBuilder, {this.dismissibleItems: true, this.dismissedCallback,
-    this.viewportFraction: .85, this.height: 525, this.width: 700,
-    this.itemCount: null});
+  const CoverFlow({@required this.itemBuilder, this.dismissibleItems: true,
+    this.dismissedCallback, this.viewportFraction: .85, this.height: 525,
+    this.width: 700, this.itemCount: null}) : assert(itemBuilder != null);
 
   @override
   _CoverFlowState createState() => new _CoverFlowState();

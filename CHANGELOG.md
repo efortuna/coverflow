@@ -1,3 +1,8 @@
+## [0.0.6] - 4/19/18
+
+* Added made the builder parameter a named argument [itemBuilder] in keeping
+  with flutter conventions.
+
 ## [0.0.5] - 4/18/18
 
 * Added [itemCount] field so that users can have a non-infinitely scrolling

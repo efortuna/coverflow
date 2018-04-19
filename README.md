@@ -1,4 +1,5 @@
-# simple coverflow
-a knockoff bad cover flow implementation in Flutter
+# Simple Coverflow for Flutter
+
+A very basic cover flow implementation to swipe between widgets in Flutter.
 
 Pull requests certainly welcome.

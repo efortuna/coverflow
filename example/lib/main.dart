@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           appBar: new AppBar(
             title: new Text('Coverflow Demo'),
           ),
-          body: new CoverFlow(widgetBuilder,
+          body: new CoverFlow(itemBuilder: widgetBuilder,
               dismissedCallback: disposeDismissed)
       ),
     );
