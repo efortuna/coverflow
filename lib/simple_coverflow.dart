@@ -38,9 +38,14 @@ class CoverFlow extends StatefulWidget {
   /// cards one the user scrolls past the last one.
   final int itemCount;
 
+  /// The index of the first item to show. If specified, the CoverFlow will
+  /// initially display the item at this index.
+  final int startIndex;
+
   const CoverFlow({@required this.itemBuilder, this.dismissibleItems: true,
     this.dismissedCallback, this.viewportFraction: .85, this.height: 525,
-    this.width: 700, this.itemCount: null}) : assert(itemBuilder != null);
+    this.width: 700, this.itemCount: null, this.startIndex: null})
+      : assert(itemBuilder != null);
 
   @override
   _CoverFlowState createState() => new _CoverFlowState();
@@ -48,13 +53,17 @@ class CoverFlow extends StatefulWidget {
 
 class _CoverFlowState extends State<CoverFlow> {
   PageController controller;
-  int currentPage = 0;
+  int currentPage;
   bool _pageHasChanged = false;
 
   @override
   initState() {
     super.initState();
-    controller = new PageController(viewportFraction: widget.viewportFraction);
+    currentPage = widget.startIndex ?? 0;
+    controller = new PageController(
+      viewportFraction: widget.viewportFraction,
+      initialPage: currentPage,
+    );
   }
 
   @override
@@ -81,7 +90,7 @@ class _CoverFlowState extends State<CoverFlow> {
     return new AnimatedBuilder(
         animation: controller,
         builder: (context, Widget child) {
-          double result = _pageHasChanged ? controller.page : 0.0;
+          double result = _pageHasChanged ? controller.page : currentPage * 1.0;
           double value = result - index;
 
           value = (1 - (value.abs() * .5)).clamp(0.0, 1.0);
