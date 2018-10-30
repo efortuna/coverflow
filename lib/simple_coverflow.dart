@@ -5,6 +5,9 @@ import 'package:flutter/widgets.dart';
 typedef void OnDismissedCallback(
     int dismissedItem, DismissDirection direction);
 
+/// Function that is called when the current item is changed
+typedef void OnCurrentItemChangedCallback(int currentItem);
+
 /// Widget that animates scanning through a list of other widgets, like
 /// the iOS Cover Flow animation.
 class CoverFlow extends StatefulWidget {
@@ -42,9 +45,12 @@ class CoverFlow extends StatefulWidget {
   /// initially display the item at this index.
   final int startIndex;
 
+  /// Called when current item is changed.
+  final OnCurrentItemChangedCallback currentItemChangedCallback;
+
   const CoverFlow({@required this.itemBuilder, this.dismissibleItems: true,
     this.dismissedCallback, this.viewportFraction: .85, this.height: 525,
-    this.width: 700, this.itemCount: null, this.startIndex: null})
+    this.width: 700, this.itemCount: null, this.startIndex: null, this.currentItemChangedCallback: null})
       : assert(itemBuilder != null);
 
   @override
@@ -79,6 +85,9 @@ class _CoverFlowState extends State<CoverFlow> {
           setState(() {
             _pageHasChanged = true;
             currentPage = value;
+            if (widget.currentItemChangedCallback != null) {
+              widget.currentItemChangedCallback(value);
+            }
           });
         },
         controller: controller,
