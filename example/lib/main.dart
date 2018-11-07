@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
             title: new Text('Coverflow Demo'),
           ),
           body: new CoverFlow(itemBuilder: widgetBuilder,
-              dismissedCallback: disposeDismissed)
+              dismissedCallback: disposeDismissed,
+              currentItemChangedCallback: (int index) {print(index);})
       ),
     );
   }
