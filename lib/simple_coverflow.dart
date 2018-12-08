@@ -51,10 +51,10 @@ class CoverFlow extends StatefulWidget {
   /// ValueNotifier to interact with the PageController from outside.
   final ValueNotifier<PageController> controllerValueNotifier;
 
-  const CoverFlow({@required this.itemBuilder, this.dismissibleItems: true,
+  const CoverFlow({Key key, @required this.itemBuilder, this.dismissibleItems: true,
     this.dismissedCallback, this.viewportFraction: .85, this.height: 525,
     this.width: 700, this.itemCount: null, this.startIndex: null, this.currentItemChangedCallback: null, this.controllerValueNotifier})
-      : assert(itemBuilder != null);
+      : assert(itemBuilder != null), super(key: key);
 
   @override
   _CoverFlowState createState() => new _CoverFlowState();
