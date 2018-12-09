@@ -48,10 +48,13 @@ class CoverFlow extends StatefulWidget {
   /// Called when current item is changed.
   final OnCurrentItemChangedCallback currentItemChangedCallback;
 
-  const CoverFlow({@required this.itemBuilder, this.dismissibleItems: true,
+  /// ValueNotifier to interact with the PageController from outside.
+  final ValueNotifier<PageController> controllerValueNotifier;
+
+  const CoverFlow({Key key, @required this.itemBuilder, this.dismissibleItems: true,
     this.dismissedCallback, this.viewportFraction: .85, this.height: 525,
-    this.width: 700, this.itemCount: null, this.startIndex: null, this.currentItemChangedCallback: null})
-      : assert(itemBuilder != null);
+    this.width: 700, this.itemCount: null, this.startIndex: null, this.currentItemChangedCallback: null, this.controllerValueNotifier})
+      : assert(itemBuilder != null), super(key: key);
 
   @override
   _CoverFlowState createState() => new _CoverFlowState();
@@ -70,6 +73,9 @@ class _CoverFlowState extends State<CoverFlow> {
       viewportFraction: widget.viewportFraction,
       initialPage: currentPage,
     );
+    if (widget.controllerValueNotifier != null) {
+      widget.controllerValueNotifier.value = controller;
+    }
   }
 
   @override
