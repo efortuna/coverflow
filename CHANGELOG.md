@@ -1,3 +1,8 @@
+## [0.0.7] - 4/19/18
+
+* Added ValueNotifier so that other interested classes can keep track of
+  what item is displayed on the CoverFlow.
+
 ## [0.0.6] - 4/19/18
 
 * Added made the builder parameter a named argument [itemBuilder] in keeping
