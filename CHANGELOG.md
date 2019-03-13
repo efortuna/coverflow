@@ -1,3 +1,8 @@
+## [0.0.8] - 3/12/19
+
+* Updated version constraints to be much more permissive of what Flutter and SDK
+  versions are accepted.
+
 ## [0.0.7] - 4/19/18
 
 * Added ValueNotifier so that other interested classes can keep track of
